@@ -1029,3 +1029,220 @@ window.addEventListener("load", function () {
 
 
 
+
+
+
+
+
+
+
+// index --1 
+
+
+const locBox = document.getElementById("jdLoc");
+const dropdown = document.getElementById("jdLocDropdown");
+const selected = document.getElementById("selectedLocation");
+
+// toggle dropdown
+locBox.addEventListener("click", (e) => {
+  locBox.classList.toggle("active");
+});
+
+// select location
+document.querySelectorAll(".jd-loc-item").forEach(item => {
+  item.addEventListener("click", () => {
+    selected.textContent = item.textContent;
+    locBox.classList.remove("active");
+  });
+});
+
+// close if click outside
+document.addEventListener("click", (e) => {
+  if (!locBox.contains(e.target)) {
+    locBox.classList.remove("active");
+  }
+});
+
+// drop down location
+
+
+
+// carousel in hero section
+let currentIndex = 0;
+
+const carousel = document.getElementById("jdCarousel");
+const slides = document.querySelectorAll(".jd-slide");
+const totalSlides = slides.length;
+
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+const dotsContainer = document.getElementById("jdDots");
+
+/* CREATE DOTS */
+slides.forEach((_, i) => {
+  const dot = document.createElement("span");
+  dot.classList.add("jd-dot");
+  if (i === 0) dot.classList.add("active");
+  dot.addEventListener("click", () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+});
+
+const dots = document.querySelectorAll(".jd-dot");
+
+/* UPDATE SLIDE */
+function updateCarousel() {
+  carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+  dots.forEach(dot => dot.classList.remove("active"));
+  dots[currentIndex].classList.add("active");
+}
+
+/* NEXT */
+nextBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % totalSlides;
+  updateCarousel();
+});
+
+/* PREV */
+prevBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+  updateCarousel();
+});
+
+/* DOT CLICK */
+function goToSlide(index) {
+  currentIndex = index;
+  updateCarousel();
+}
+
+/* AUTO SLIDE (optional) */
+setInterval(() => {
+  currentIndex = (currentIndex + 1) % totalSlides;
+  updateCarousel();
+}, 5000);
+
+
+
+// location auto close
+
+
+
+
+
+
+
+// OPEN MENU (☰)
+document.querySelector(".open-menu").addEventListener("click", function () {
+    document.querySelector(".vs-menu-wrapper").classList.add("active");
+});
+
+// CLOSE MENU (❌ inside menu)
+document.querySelector(".vs-menu-wrapper .vs-menu-toggle").addEventListener("click", function () {
+    document.querySelector(".vs-menu-wrapper").classList.remove("active");
+});
+
+// CLOSE WHEN CLICK OUTSIDE
+document.addEventListener("click", function (e) {
+    const menu = document.querySelector(".vs-menu-area");
+    const wrapper = document.querySelector(".vs-menu-wrapper");
+
+    if (!menu.contains(e.target) && !e.target.closest(".open-menu")) {
+        wrapper.classList.remove("active");
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const stickyHeader = document.querySelector(".sticky-active");
+
+window.addEventListener("scroll", function () {
+  if (window.scrollY > 200) {
+    stickyHeader.classList.add("scrolled");
+  } else {
+    stickyHeader.classList.remove("scrolled");
+  }
+});
+
+window.addEventListener("load", function () {
+
+  const header = document.getElementById("mainHeader");
+
+  window.addEventListener("scroll", function () {
+
+    if (window.scrollY > 150) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+
+  });
+
+});
+
+
+document.querySelectorAll(".jd-loc").forEach(function(loc) {
+
+    const dropdown = loc.querySelector(".jd-loc-dropdown");
+    const selectedText = loc.querySelector(".selectedLocation");
+
+    // OPEN DROPDOWN
+    loc.addEventListener("click", function(e) {
+        e.stopPropagation();
+
+        document.querySelectorAll(".jd-loc-dropdown").forEach(d => {
+            if (d !== dropdown) d.style.display = "none";
+        });
+
+        dropdown.style.display =
+            dropdown.style.display === "block" ? "none" : "block";
+    });
+
+    // CLICK ITEM
+    loc.querySelectorAll(".jd-loc-item").forEach(function(item) {
+
+        item.addEventListener("click", function(e) {
+            e.stopPropagation();
+
+            // ✅ UPDATE TEXT CORRECTLY
+            selectedText.innerText = this.innerText;
+
+            dropdown.style.display = "none";
+        });
+
+    });
+
+});
+
+// CLOSE OUTSIDE
+document.addEventListener("click", function() {
+    document.querySelectorAll(".jd-loc-dropdown").forEach(d => {
+        d.style.display = "none";
+    });
+});
+
+
+
+const account = document.querySelector(".account-wrapper");
+
+account.addEventListener("click", function (e) {
+  e.stopPropagation();
+  this.classList.toggle("active");
+});
+
+// CLOSE OUTSIDE
+document.addEventListener("click", function () {
+  account.classList.remove("active");
+});
